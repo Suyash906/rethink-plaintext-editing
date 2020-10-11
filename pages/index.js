@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import path from 'path';
 import classNames from 'classnames';
 
-import { listFiles } from '../files';
+import { listFiles, updateFile } from '../files';
 
 // Used below, these need to be registered
 import MarkdownEditor from '../MarkdownEditor';
@@ -119,6 +119,7 @@ function PlaintextFilesChallenge() {
 
     let updatedfiles = files.map(curr => {
       if (curr.name === file.name) {
+          updateFile(path.basename(file.name), file)
           return file
       } else{
         return curr

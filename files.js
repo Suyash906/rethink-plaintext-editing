@@ -1,4 +1,5 @@
 
+import BACKEND_URL from './config';
 class FileHandler {
   constructor(){
     this.text = {}
@@ -69,7 +70,7 @@ class FileHandler {
 
 var fileHandler = new FileHandler()
 export function listFiles() {
-
+  
   const guide = new File(
     [
       fileHandler.getfileText('guide')
@@ -137,4 +138,9 @@ export function listFiles() {
   );
 
   return [guide, plain, water, fancy, javascript, json];
+}
+
+export function updateFile(filename, file) {
+  fileHandler.setFileText(filename, file.text())
+  fileHandler.setLastModifiedDate(file.lastModified);
 }

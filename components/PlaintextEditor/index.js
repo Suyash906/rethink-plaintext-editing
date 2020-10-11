@@ -13,7 +13,7 @@ function PlaintextEditor({ file, write }) {
     (async () => {
       setValue(await file.text());
     })();
-  }, []);
+  }, [file]);
 
   const handletextChange = (e) => {
     console.log(`file changed`)
