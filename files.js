@@ -1,5 +1,4 @@
 
-import BACKEND_URL from './config';
 class FileHandler {
   constructor(){
     this.text = {}
