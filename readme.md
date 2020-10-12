@@ -15,7 +15,7 @@ Once complete, please email us a link to your forked repo with clean, tested cod
 
 ![editor_1](https://github.com/Suyash906/book-search/blob/main/screenshots/editor_1.png)
 
-![editor_2](https://github.com/Suyash906/book-search/blob/main/screenshots/editor_2- .png)
+![editor_2](https://github.com/Suyash906/book-search/blob/main/screenshots/editor_2.png)
 
 ## Solution approach
 - _react-markdown_ npm package has been added to visualize the markdown changes.
