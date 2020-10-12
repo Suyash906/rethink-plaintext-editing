@@ -5,7 +5,7 @@ import path from 'path';
 import css from './style.css';
 
 function PlaintextEditor({ file, write }) {
-  console.log(file, write);
+  // console.log(file, write);
 
   const [value, setValue] = useState('');
 
@@ -16,7 +16,7 @@ function PlaintextEditor({ file, write }) {
   }, [file]);
 
   const handletextChange = (e) => {
-    console.log(`file changed`)
+    // console.log(`file changed`)
     setValue(e.target.value)
   }
 

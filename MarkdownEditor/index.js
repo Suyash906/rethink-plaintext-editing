@@ -6,7 +6,7 @@ const ReactMarkdown = require('react-markdown')
 import css from './style.css';
 
 function MarkdownEditor({ file, write }) {
-  console.log(file, write);
+  // console.log(file, write);
 
   const [value, setValue] = useState('');
 
@@ -17,7 +17,7 @@ function MarkdownEditor({ file, write }) {
   }, [file]);
 
   const handletextChange = (e) => {
-    console.log(`file changed`)
+    // console.log(`file changed`)
     setValue(e.target.value)
   }
 

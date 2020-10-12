@@ -3,6 +3,7 @@ import Head from 'next/head';
 import PropTypes from 'prop-types';
 import path from 'path';
 import classNames from 'classnames';
+import BACKEND_URL from '../config';
 
 import { listFiles, updateFile } from '../files';
 
@@ -106,27 +107,81 @@ const REGISTERED_EDITORS = {
 function PlaintextFilesChallenge() {
   const [files, setFiles] = useState([]);
   const [activeFile, setActiveFile] = useState(null);
-
+  
   useEffect(() => {
-    const files = listFiles();
-    setFiles(files);
+    fetch(BACKEND_URL)
+    .then(response => response.json())
+    .then( data => {
+      let files = []
+      data.map( curr => {
+        let new_file = new File(
+          [
+            curr.fileText
+          ],
+          curr.fileExtension,
+          {
+            type: curr.type,
+            lastModified: curr.updatedAt
+          }
+        );
+        files.push(new_file)
+      })
+      setFiles(files)
+
+      return () => {
+        console.log("This will be logged on unmount");
+      }
+    })
+
+
   }, []);
 
-  const write = file => {
+  const write = async file => {
     console.log('Writing soon... ', file.name);
 
     // TODO: Write the file to the `files` array
+    let urlparam = path.basename(file.name).split(".")[0];
+    const requestData = {
+      fileText: await file.text()
+    }
+    console.log(`============`);
+    console.log(requestData);
 
-    let updatedfiles = files.map(curr => {
-      if (curr.name === file.name) {
-          updateFile(path.basename(file.name), file)
-          return file
-      } else{
-        return curr
-      }
-    });
-
-    setFiles(updatedfiles)
+    fetch(`${BACKEND_URL}/${urlparam}`, {
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      method:'PATCH',
+      body: JSON.stringify(requestData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      let updatedfiles = files.map(curr => {
+        if (curr.name === data.fileExtension) {
+            return new File(
+              [
+                data.fileText
+              ],
+              data.fileExtension,
+              {
+                type: data.type,
+                lastModified: data.updatedAt
+              }
+            );
+        } else{
+          return curr
+        }
+      })
+      setFiles(updatedfiles)
+    })
+    .catch(error => console.log(error))
+    
+    // let updatedfiles = files.map(curr => {
+    //   if (curr.name === file.name) {
+    //       updateFile(path.basename(file.name), file)
+    //       return file
+    //   } else{
+    //     return curr
+    //   }
+    // });
     
   };
 
